@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap");
+@import "tailwindcss";
+
+/* Theme tokens (plain CSS variables, so no @theme needed) */
+:root {
+  --font-sans: "Parkinsans", ui-sans-serif, system-ui, sans-serif;
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #a3a3a3; /* section headings */
+  --soft: #525252; /* secondary text */
+  color-scheme: light;
+}
+
+:root.dark {
+  --bg: #1a1a1a;
+  --fg: #f2f2f2;
+  --muted: #737373;
+  --soft: #a3a3a3;
+  color-scheme: dark;
+}
+
+/* Desktop renders at an 80% scale; all sizes are rem so this one value rescales everything */
+@media (min-width: 768px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Circular reveal: the new theme is clipped by a growing circle (see ThemeContext) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-reveal 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(var(--vt-start, 0px) at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
