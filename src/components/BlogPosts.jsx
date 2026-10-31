@@ -23,11 +23,11 @@ const line = (delay = 0) => ({
 export default function BlogPosts({ title = "Blog", items = [], href }) {
   return (
     <section>
-      {/* Heading row (styled like Block.jsx headings) */}
-      <div className="mb-8 flex items-center justify-between md:mb-11">
+      {/* Heading row */}
+      <div className="mb-6 flex items-center justify-between md:mb-8">
         <motion.h2
           {...reveal(0.1)}
-          className="text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) md:text-[0.9375rem]"
+          className="text-[11px] font-normal uppercase tracking-[0.25em] text-(color:--muted) md:text-[0.8125rem]"
         >
           {title}
         </motion.h2>
@@ -35,7 +35,7 @@ export default function BlogPosts({ title = "Blog", items = [], href }) {
           <motion.div {...reveal(0.14)}>
             <Link
               to={href}
-              className="text-xs font-normal tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
+              className="text-[11px] font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.8125rem]"
             >
               All Posts →
             </Link>
@@ -43,49 +43,46 @@ export default function BlogPosts({ title = "Blog", items = [], href }) {
         )}
       </div>
 
-      {/* Top line */}
-      <motion.div {...line(0.18)} className="h-px origin-left bg-current/15" />
-
-      {/* Rows */}
-      <ul>
+      {/* Posts: one column on mobile, three columns on desktop */}
+      <ul className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3 md:gap-x-10 md:gap-y-12">
         {items.map(({ title: name, excerpt, date, href: postHref }, i) => {
-          const rowDelay = 0.2 + i * 0.1; // rows cascade top to bottom
-          const Row = postHref ? "a" : "div";
-          const rowProps = postHref ? { href: postHref } : {};
+          const delay = 0.15 + i * 0.1; // posts cascade left to right
+          const Card = postHref ? "a" : "div";
+          const cardProps = postHref ? { href: postHref } : {};
 
           return (
-            <li key={`${name}-${i}`} className="relative">
-              <Row
-                {...rowProps}
-                className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 py-5 transition-opacity hover:opacity-70 focus-visible:opacity-70 md:py-[26px]"
-              >
-                <motion.h3
-                  {...reveal(rowDelay)}
-                  className="min-w-0 text-[14px] font-medium md:text-base"
-                >
-                  {name}
-                </motion.h3>
+            <li key={`${name}-${i}`}>
+              {/* Top line */}
+              <motion.div
+                {...line(delay)}
+                className="h-px origin-left bg-current/15"
+              />
 
+              <Card
+                {...cardProps}
+                className="block pt-4 transition-opacity hover:opacity-70 focus-visible:opacity-70 md:pt-5"
+              >
                 <motion.span
-                  {...reveal(rowDelay + 0.04)}
-                  className="col-start-2 row-start-1 whitespace-nowrap text-[12px] font-light text-(color:--soft) md:text-[14px]"
+                  {...reveal(delay + 0.05)}
+                  className="block text-[11px] font-light text-(color:--soft) md:text-[12px]"
                 >
                   {date}
                 </motion.span>
 
+                <motion.h3
+                  {...reveal(delay + 0.1)}
+                  className="mt-2 text-[14px] font-light leading-snug md:text-[15px]"
+                >
+                  {name}
+                </motion.h3>
+
                 <motion.p
-                  {...reveal(rowDelay + 0.08)}
-                  className="col-span-2 min-w-0 truncate text-[12px] font-light text-(color:--soft) md:text-[14px]"
+                  {...reveal(delay + 0.15)}
+                  className="mt-2 line-clamp-2 text-[12px] font-light leading-[1.6] text-(color:--soft) md:text-[13px]"
                 >
                   {excerpt}
                 </motion.p>
-              </Row>
-
-              {/* Row bottom line */}
-              <motion.span
-                {...line(rowDelay + 0.1)}
-                className="absolute inset-x-0 bottom-0 h-px origin-left bg-current/15"
-              />
+              </Card>
             </li>
           );
         })}

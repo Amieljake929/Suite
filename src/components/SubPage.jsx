@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Hero from "./Hero";
 
 // Shared layout for About / Projects / Gear / Blogs
-export default function SubPage({ intro, lead, children }) {
+export default function SubPage({ intro, subtitle, lead, children }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -11,7 +11,7 @@ export default function SubPage({ intro, lead, children }) {
     >
       {intro && (
         <div className="mt-[20vh]">
-          <Hero text={intro} />
+          <Hero text={intro} subtitle={subtitle} />
         </div>
       )}
       {lead && <div className="mt-[20vh]">{lead}</div>}

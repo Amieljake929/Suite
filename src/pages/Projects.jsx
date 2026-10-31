@@ -1,11 +1,11 @@
 import SubPage from "../components/SubPage";
-import Block from "../components/Block";
-import { builds } from "../data";
+import ProjectGrid from "../components/ProjectGrid";
+import { projects } from "../projectsData";
 
 export default function Projects() {
   return (
     <SubPage intro="A few things I've designed and built.">
-      <Block title="Builds" items={builds} />
+      <ProjectGrid items={projects} />
     </SubPage>
   );
 }

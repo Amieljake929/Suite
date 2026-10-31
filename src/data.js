@@ -19,11 +19,12 @@ export const network = [
 ];
 
 export const skills = [
+  { label: "Web UI/UX" },
+  { label: "Full-Stack Developer" },
   { label: "Interactive Design" },
   { label: "Motion Design" },
   { label: "User Experience" },
-  { label: "Full-Stack Developer" },
-  { label: "UI/UX Designer" },
+
 ];
 
 export const builds = [
@@ -47,28 +48,89 @@ export const blogPostsLink = "/blogs"; // where "All Posts" goes; set to "" to h
 
 export const blogPosts = [
   {
-    title: "Your first blog post title goes here",
+    title: "How Developers Are Using AI to Elevate Their Craft",
     excerpt:
-      "A short summary of the post. Long text is cut off with an ellipsis at the end of the line.",
-    date: "Oct 2026",
+      "There’s a quiet shift happening in software development: the focus is moving from how fast you can type code to how effectively you can think, design, and architect.",
+    date: "Oct 14, 2026",
     href: "#",
   },
   {
-    title: "Your second blog post title",
+    title: "Why Living Lowkey Is the Ultimate Flex",
     excerpt:
-      "Another short summary that explains what the reader will learn from this post.",
+      "In a world where everyone is broadcast-ing their daily life, posting every milestone, and maintaining a non-stop digital presence, choosing silence can feel almost radical.",
     date: "Sep 2026",
     href: "#",
   },
   {
-    title: "Your third blog post title",
+    title: "Breaking Free from Comparison",
     excerpt:
-      "One more summary line. Keep these to a sentence or two so each row stays tidy.",
+      "It is easy to fall into the habit of measuring your own progress against someone else’s highlight reel, leaving you feeling like you are constantly falling behind.",
     date: "Aug 2026",
     href: "#",
   },
 ];
 
+// ---- About page ----
+export const aboutBio =
+  "I'm a full-stack developer and web designer based in the Philippines. I design and build fast, accessible web apps from database to interface, with a focus on clean UI and smooth motion.";
+
+// Shown as "At a glance": `period` is the label, `title` is the value
+export const aboutDetails = [
+  { period: "Location", title: "Tandang Sora, Quezon City" },
+  { period: "Availability", title: "Open to full-time roles and freelance work" },
+  { period: "Email", title: "amieljakebaril@gmail.com", href: "mailto:amieljakebaril@gmail.com" },
+  { period: "Resume", title: "Download PDF", href: "/resume/Amiel_Jake_Baril.pdf", newTab: true },
+];
+
+export const internship = [
+  {
+    period: "2025",
+    title: "Web Development Intern",
+    org: "Company Name",
+    note: "One or two lines on what you worked on and the result, e.g. built reusable UI components and fixed 20+ bugs.",
+    tech: "React · Node.js · MySQL",
+  },
+];
+
+export const academicProjects = [
+  {
+    period: "2024",
+    title: "School Management System",
+    org: "Capstone Project",
+    note: "Web app for managing students, grades and schedules, with separate admin and teacher access.",
+    tech: "React · Laravel · MySQL",
+    href: "#",
+  },
+  {
+    period: "2023",
+    title: "Barangay Management System",
+    org: "Course Project",
+    note: "Records and certificate request system for a local barangay office.",
+    tech: "PHP · MySQL",
+    href: "#",
+  },
+  {
+    period: "2023",
+    title: "Your Third Project",
+    org: "Course Name",
+    note: "A short line on what it does and what you built.",
+    tech: "Tech · Tech · Tech",
+  },
+];
+
+export const education = [
+  {
+    period: "2020 — 2024",
+    title: "Bachelor of Science in Information Technology",
+    org: "Bestlink College of the Philippines",
+    note: "GWA: 1.65, Web Systems and Technologies (Frontend/Backend), System Analysis and Design, Data Structure and Algorithms, Application Programming Interfaces (API)",
+  },
+];
+
+export const certifications = [
+  { period: "2025", title: "Certification Name", org: "Issuing Organization" },
+  { period: "2024", title: "Another Certification", org: "Issuing Organization" },
+];
 
 // ---- Seminars (shown on the home page) ----
 export const seminarsLink = "#"; // where "All Seminars" goes; set to "" to hide it

@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Gear from "./pages/Gear";
 import Blogs from "./pages/Blogs";
+import BlogPost from "./pages/BlogPost";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/gear" element={<Gear />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:slug" element={<BlogPost />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer

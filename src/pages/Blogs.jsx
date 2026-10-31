@@ -1,11 +1,11 @@
 import SubPage from "../components/SubPage";
-import Block from "../components/Block";
-import { blogs } from "../data";
+import BlogList from "../components/BlogList";
+import { posts } from "../blogsData";
 
 export default function Blogs() {
   return (
     <SubPage intro="Notes on design, code and what I'm learning.">
-      <Block title="Writing" items={blogs} />
+      <BlogList title="Writing" items={posts} />
     </SubPage>
   );
 }

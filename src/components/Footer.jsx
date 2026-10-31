@@ -49,7 +49,7 @@ export default function Footer({ onBackToTop }) {
           variants={item}
           className="text-[12px] font-light text-(color:--soft) md:text-[14px]"
         >
-          © {year} {profile.name} Baril. All rights reserved.
+          © {year} All rights reserved.
         </motion.p>
 
         <motion.button
