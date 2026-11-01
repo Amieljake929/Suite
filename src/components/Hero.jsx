@@ -1,17 +1,27 @@
 import { motion } from "framer-motion";
 import { profile } from "../data";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 
 export default function Hero({
-  text = profile.tagline,
+  text: textProp,
   // Only shows under the default home tagline, so other pages that pass
   // their own `text` don't get it unless they pass `subtitle` too.
-  subtitle = text === profile.tagline ? profile.subtitle : undefined,
+  subtitle: subtitleProp,
 }) {
+  const { lang } = useLanguage();
+
+  const isDefault = textProp === undefined || textProp === profile.tagline;
+  const text = useLocalized(isDefault ? profile.tagline : textProp);
+  const subtitle = useLocalized(
+    subtitleProp !== undefined ? subtitleProp : isDefault ? profile.subtitle : undefined
+  );
+
   const words = text.split(" ");
   const delayAfterWords = 0.35 + words.length * 0.04 + 0.1;
 
   return (
-    <div>
+    // key={lang} replays the animation when the language changes
+    <div key={lang}>
       <h2 className="max-w-[90%] text-[18px] font-light leading-[1.5] tracking-[0.04em] md:text-[1.92vw]">
         {words.map((word, i) => (
           <motion.span

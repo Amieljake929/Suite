@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -27,7 +28,10 @@ const COLS = {
 };
 
 // Card grid: one column on mobile, `cols` columns on desktop
-export default function InfoCards({ title, items = [], cols = 3 }) {
+export default function InfoCards({ title: titleProp, items: itemsProp = [], cols = 3 }) {
+  const title = useLocalized(titleProp);
+  const items = useLocalized(itemsProp);
+
   return (
     <section className="col-span-2">
       <motion.h2
@@ -53,7 +57,8 @@ export default function InfoCards({ title, items = [], cols = 3 }) {
             : {};
 
           return (
-            <li key={`${period}-${name}-${i}`}>
+            // index key so cards don't remount (and re-animate) when the language changes
+            <li key={i}>
               {/* Top line */}
               <motion.div
                 {...line(delay)}

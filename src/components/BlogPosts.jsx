@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -20,68 +21,92 @@ const line = (delay = 0) => ({
   transition: { duration: 0.9, delay, ease: EASE },
 });
 
-export default function BlogPosts({ title = "Blog", items = [], href }) {
+// Router Link for internal paths, normal link for everything else
+function Card({ href, className, children }) {
+  if (!href || href === "#") return <div className={className}>{children}</div>;
+  if (href.startsWith("/"))
+    return (
+      <Link to={href} className={className}>
+        {children}
+      </Link>
+    );
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={className}
+    >
+      {children}
+    </a>
+  );
+}
+
+export default function BlogPosts({ title: titleProp, items: itemsProp = [], href }) {
+  const { t } = useLanguage();
+  const title = useLocalized(titleProp) ?? t("section.blog");
+  const items = useLocalized(itemsProp);
+
   return (
     <section>
-      {/* Heading row */}
-      <div className="mb-6 flex items-center justify-between md:mb-8">
+            {/* Heading row */}
+      <div className="mb-8 flex items-center justify-between gap-4 md:mb-11">
         <motion.h2
           {...reveal(0.1)}
-          className="text-[11px] font-normal uppercase tracking-[0.25em] text-(color:--muted) md:text-[0.8125rem]"
+          className="text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) md:text-[0.9375rem]"
         >
           {title}
         </motion.h2>
+
         {href && (
-          <motion.div {...reveal(0.14)}>
+          <motion.div {...reveal(0.14)} className="shrink-0">
             <Link
               to={href}
-              className="text-[11px] font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.8125rem]"
+              className="-mr-[0.25em] block whitespace-nowrap text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
             >
-              All Posts →
+              {t("home.allPosts")} →
             </Link>
           </motion.div>
         )}
       </div>
 
-      {/* Posts: one column on mobile, three columns on desktop */}
-      <ul className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3 md:gap-x-10 md:gap-y-12">
-        {items.map(({ title: name, excerpt, date, href: postHref }, i) => {
-          const delay = 0.15 + i * 0.1; // posts cascade left to right
-          const Card = postHref ? "a" : "div";
-          const cardProps = postHref ? { href: postHref } : {};
+      {/* Posts: 1 column on mobile, 3 on desktop */}
+      <ul className="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-3">
+        {items.map(({ title: name, excerpt, date, href: to }, i) => {
+          const delay = 0.15 + i * 0.1; // cards cascade left to right
 
           return (
-            <li key={`${name}-${i}`}>
-              {/* Top line */}
-              <motion.div
-                {...line(delay)}
-                className="h-px origin-left bg-current/15"
-              />
+            // index key so cards don't remount (and re-animate) when the language changes
+            <li key={i}>
+              <motion.div {...line(delay)} className="h-px origin-left bg-current/15" />
 
               <Card
-                {...cardProps}
-                className="block pt-4 transition-opacity hover:opacity-70 focus-visible:opacity-70 md:pt-5"
+                href={to}
+                className="block pt-5 transition-opacity hover:opacity-70 focus-visible:opacity-70 md:pt-6"
               >
                 <motion.span
                   {...reveal(delay + 0.05)}
-                  className="block text-[11px] font-light text-(color:--soft) md:text-[12px]"
+                  className="block text-[12px] font-light text-(color:--soft) md:text-[14px]"
                 >
                   {date}
                 </motion.span>
 
                 <motion.h3
                   {...reveal(delay + 0.1)}
-                  className="mt-2 text-[14px] font-light leading-snug md:text-[15px]"
+                  className="mt-2 text-[14px] font-normal leading-snug md:text-[18px]"
                 >
                   {name}
                 </motion.h3>
 
-                <motion.p
-                  {...reveal(delay + 0.15)}
-                  className="mt-2 line-clamp-2 text-[12px] font-light leading-[1.6] text-(color:--soft) md:text-[13px]"
-                >
-                  {excerpt}
-                </motion.p>
+                {excerpt && (
+                  <motion.p
+                    {...reveal(delay + 0.15)}
+                    className="mt-3 line-clamp-2 text-[12px] font-light leading-[1.6] text-(color:--soft) md:text-[14px]"
+                  >
+                    {excerpt}
+                  </motion.p>
+                )}
               </Card>
             </li>
           );

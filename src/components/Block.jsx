@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx, staggered per item
 const list = {
@@ -16,7 +17,10 @@ const item = {
   },
 };
 
-export default function Block({ title, items }) {
+export default function Block({ title: titleProp, items: itemsProp }) {
+  const title = useLocalized(titleProp);
+  const items = useLocalized(itemsProp);
+
   return (
     <motion.section
       variants={list}
@@ -32,8 +36,13 @@ export default function Block({ title, items }) {
       </motion.h2>
 
       <ul>
-        {items.map(({ label, href }) => (
-          <motion.li key={label} variants={item} className="text-sm leading-[1.625rem] md:text-lg md:leading-[2.1875rem]">
+        {/* index key so items don't remount (and re-animate) when the language changes */}
+        {items.map(({ label, href }, i) => (
+          <motion.li
+            key={i}
+            variants={item}
+            className="text-sm leading-[1.625rem] md:text-lg md:leading-[2.1875rem]"
+          >
             {href ? (
               <a
                 href={href}

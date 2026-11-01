@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { profile } from "../data";
+import { useLanguage } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -32,6 +32,7 @@ const line = {
 };
 
 export default function Footer({ onBackToTop }) {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
@@ -49,7 +50,7 @@ export default function Footer({ onBackToTop }) {
           variants={item}
           className="text-[12px] font-light text-(color:--soft) md:text-[14px]"
         >
-          © {year} All rights reserved.
+          © {year} {t("footer.rights")}
         </motion.p>
 
         <motion.button
@@ -58,7 +59,7 @@ export default function Footer({ onBackToTop }) {
           onClick={onBackToTop}
           className="cursor-pointer text-[12px] font-light text-(color:--soft) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[14px]"
         >
-          Back to top ↑
+          {t("footer.backToTop")} ↑
         </motion.button>
       </div>
     </motion.footer>

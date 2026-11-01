@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -11,7 +12,10 @@ const reveal = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: EASE },
 });
 
-export default function GearSection({ title, items = [] }) {
+export default function GearSection({ title: titleProp, items: itemsProp = [] }) {
+  const title = useLocalized(titleProp);
+  const items = useLocalized(itemsProp);
+
   return (
     <section className="col-span-2">
       {/* Centered container: heading and cards share the same left edge */}
@@ -34,7 +38,8 @@ export default function GearSection({ title, items = [] }) {
               : {};
 
             return (
-              <motion.li key={`${name}-${i}`} {...reveal(delay)}>
+              // index key so cards don't remount (and re-animate) when the language changes
+              <motion.li key={i} {...reveal(delay)}>
                 <Card
                   {...cardProps}
                   className="group flex h-full flex-col rounded-xl border border-current/10 p-4 transition-colors duration-300 hover:border-current/30 md:rounded-2xl md:p-6"

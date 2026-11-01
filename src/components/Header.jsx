@@ -3,18 +3,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { profile } from "../data";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const links = [
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/gear", label: "Gear" },
-  { to: "/blogs", label: "Blogs" },
+  { to: "/about", key: "nav.about" },
+  { to: "/projects", key: "nav.projects" },
+  { to: "/gear", key: "nav.gear" },
+  { to: "/blogs", key: "nav.blogs" },
 ];
 
 const ROLE_INTERVAL = 5000; // ms
 
 export default function Header() {
+  const { t } = useLanguage();
+  const me = useLocalized(profile);
   const [open, setOpen] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
 
@@ -56,24 +60,27 @@ export default function Header() {
         className="relative z-50 flex items-start justify-between"
       >
         <Link to="/" onClick={() => setOpen(false)} className="block w-fit">
-          <h1 className="text-lg font-normal leading-tight md:text-xl">{profile.name}</h1>
+          <h1 className="text-lg font-normal leading-tight md:text-xl">{me.name}</h1>
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
-              key={profile.roles[roleIndex]}
+              key={me.roles[roleIndex]}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="text-[10px] font-light text-(color:--soft) md:text-[12px]"
             >
-              {profile.roles[roleIndex]}
+              {me.roles[roleIndex]}
             </motion.p>
           </AnimatePresence>
         </Link>
 
         {/* Desktop: inline links */}
-        <nav aria-label="Main" className="hidden items-center gap-8 text-base md:flex">
-          {links.map(({ to, label }) => (
+        <nav
+          aria-label={t("header.mainNav")}
+          className="hidden items-center gap-8 text-base md:flex"
+        >
+          {links.map(({ to, key }) => (
             <NavLink
               key={to}
               to={to}
@@ -83,19 +90,29 @@ export default function Header() {
                 }`
               }
             >
-              {label}
+              {t(key)}
             </NavLink>
           ))}
+
+          {/* Thin vertical divider */}
+          <span aria-hidden="true" className="h-4 w-px bg-current/20" />
+
+          <LanguageSwitcher />
+
+          {/* Thin vertical divider */}
+          <span aria-hidden="true" className="h-4 w-px bg-current/20" />
+
           <ThemeToggle />
         </nav>
 
-        {/* Mobile: theme toggle + menu button, aligned with the name */}
+        {/* Mobile: language + theme toggle + menu button, aligned with the name */}
         <div className="flex h-6 items-center gap-3 md:hidden">
+          <LanguageSwitcher />
           <ThemeToggle />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("header.closeMenu") : t("header.openMenu")}
             aria-expanded={open}
             aria-controls="mobile-menu"
             className="flex h-6 w-6 cursor-pointer items-center justify-center"
@@ -121,7 +138,7 @@ export default function Header() {
         {open && (
           <motion.nav
             id="mobile-menu"
-            aria-label="Mobile"
+            aria-label={t("header.mobileNav")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -129,7 +146,7 @@ export default function Header() {
             className="fixed inset-0 z-40 bg-(--bg) px-[10vw] pt-[30vh] md:hidden"
           >
             <ul className="space-y-7">
-              {links.map(({ to, label }, i) => (
+              {links.map(({ to, key }, i) => (
                 <motion.li
                   key={to}
                   initial={{ opacity: 0, y: 14 }}
@@ -145,7 +162,7 @@ export default function Header() {
                       }`
                     }
                   >
-                    {label}
+                    {t(key)}
                   </NavLink>
                 </motion.li>
               ))}

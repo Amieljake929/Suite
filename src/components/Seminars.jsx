@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -19,7 +20,11 @@ const line = (delay = 0) => ({
   transition: { duration: 0.9, delay, ease: EASE },
 });
 
-export default function Seminars({ title = "Seminars", items = [], href }) {
+export default function Seminars({ title: titleProp, items: itemsProp = [], href }) {
+  const { t } = useLanguage();
+  const title = useLocalized(titleProp) ?? t("section.seminars");
+  const items = useLocalized(itemsProp);
+
   return (
     <section>
       {/* Heading row (title and link styled like Block.jsx headings) */}
@@ -36,7 +41,7 @@ export default function Seminars({ title = "Seminars", items = [], href }) {
             href={href}
             className="-mr-[0.25em] text-xs font-normal tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
           >
-            Details →
+            {t("seminars.details")} →
           </motion.a>
         )}
       </div>
@@ -52,8 +57,9 @@ export default function Seminars({ title = "Seminars", items = [], href }) {
         {items.map(({ year, title: name, topic }, i) => {
           const rowDelay = 0.2 + i * 0.08; // rows cascade top to bottom
           return (
+            // index key so rows don't remount (and re-animate) when the language changes
             <li
-              key={`${year}-${name}-${i}`}
+              key={i}
               className="relative grid grid-cols-[4rem_1fr] items-baseline gap-x-4 gap-y-1 py-4 md:grid-cols-[10rem_1fr_auto] md:gap-x-6 md:py-[18px]"
             >
               <motion.span

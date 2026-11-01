@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -23,7 +24,14 @@ const line = (delay = 0) => ({
 // Used for Details, Education and Certifications.
 // Set `bottomLines={false}` to hide the line under each row.
 // Add `newTab: true` to an item to open its link in a new tab.
-export default function InfoRows({ title, items = [], bottomLines = true }) {
+export default function InfoRows({
+  title: titleProp,
+  items: itemsProp = [],
+  bottomLines = true,
+}) {
+  const title = useLocalized(titleProp);
+  const items = useLocalized(itemsProp);
+
   return (
     <section className="col-span-2">
       <motion.h2
@@ -41,8 +49,9 @@ export default function InfoRows({ title, items = [], bottomLines = true }) {
           const openInNewTab = newTab ?? href?.startsWith("http");
 
           return (
+            // index key so rows don't remount (and re-animate) when the language changes
             <li
-              key={`${period}-${name}-${i}`}
+              key={i}
               className="relative grid grid-cols-[6.5rem_1fr] items-baseline gap-x-4 py-4 md:grid-cols-[10rem_1fr] md:gap-x-6 md:py-[18px]"
             >
               <motion.span

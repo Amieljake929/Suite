@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -42,7 +43,11 @@ function Row({ href, className, children }) {
   );
 }
 
-export default function BlogList({ title = "Writing", items = [] }) {
+export default function BlogList({ title: titleProp, items: itemsProp = [] }) {
+  const { t } = useLanguage();
+  const title = useLocalized(titleProp) ?? t("blogs.writing");
+  const items = useLocalized(itemsProp);
+
   return (
     <section className="col-span-2">
       <motion.h2
@@ -59,7 +64,7 @@ export default function BlogList({ title = "Writing", items = [] }) {
           {...reveal(0.25)}
           className="py-6 text-[14px] font-light text-(color:--soft) md:text-base"
         >
-          Coming soon
+          {t("blogs.comingSoon")}
         </motion.p>
       ) : (
         <ul>
@@ -70,7 +75,8 @@ export default function BlogList({ title = "Writing", items = [] }) {
               const to = slug ? `/blogs/${slug}` : href;
 
               return (
-                <li key={`${slug ?? name}-${i}`} className="relative">
+                // index key so rows don't remount (and re-animate) when the language changes
+                <li key={i} className="relative">
                   <Row
                     href={to}
                     className="group grid grid-cols-[1fr_5.5rem] items-start gap-x-4 py-5 md:grid-cols-[10rem_1fr_12rem] md:gap-x-6 md:py-7"

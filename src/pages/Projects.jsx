@@ -1,11 +1,14 @@
 import SubPage from "../components/SubPage";
 import ProjectGrid from "../components/ProjectGrid";
 import { projects } from "../projectsData";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Projects() {
+  const { t } = useLanguage();
+
   return (
-    <SubPage intro="A few things I've designed and built.">
-      <ProjectGrid items={projects} />
+    <SubPage intro={t("projects.intro")}>
+      <ProjectGrid title={t("projects.selected")} items={projects} />
     </SubPage>
   );
 }

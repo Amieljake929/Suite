@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { useLanguage, useLocalized } from "../context/LanguageContext";
 
 // Same blur-in fade-up reveal as Hero.jsx
 const EASE = [0.22, 1, 0.36, 1];
@@ -37,7 +38,11 @@ function ProjectLink({ href, children }) {
   );
 }
 
-export default function ProjectGrid({ title = "Selected work", items = [] }) {
+export default function ProjectGrid({ title: titleProp, items: itemsProp = [] }) {
+  const { t } = useLanguage();
+  const title = useLocalized(titleProp) ?? t("projects.selected");
+  const items = useLocalized(itemsProp);
+
   return (
     <section className="col-span-2">
       <motion.h2
@@ -62,7 +67,7 @@ export default function ProjectGrid({ title = "Selected work", items = [] }) {
                 {image && (
                   <img
                     src={image}
-                    alt={`${name} screenshot`}
+                    alt={`${name} ${t("projects.screenshot")}`}
                     loading="lazy"
                     onError={(e) => (e.currentTarget.style.display = "none")}
                     className="relative h-full w-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-[1.03]"
@@ -72,7 +77,8 @@ export default function ProjectGrid({ title = "Selected work", items = [] }) {
             );
 
             return (
-              <li key={`${name}-${i}`}>
+              // index key so cards don't remount (and re-animate) when the language changes
+              <li key={i}>
                 {/* Top line */}
                 <motion.div
                   {...line(delay)}
@@ -86,7 +92,7 @@ export default function ProjectGrid({ title = "Selected work", items = [] }) {
                       href={live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Open ${name}`}
+                      aria-label={`${t("projects.open")} ${name}`}
                       className="group/img block"
                     >
                       {picture}
@@ -132,8 +138,8 @@ export default function ProjectGrid({ title = "Selected work", items = [] }) {
                     {...reveal(delay + 0.22)}
                     className="mt-4 flex items-center gap-5"
                   >
-                    {live && <ProjectLink href={live}>Live</ProjectLink>}
-                    {code && <ProjectLink href={code}>Code</ProjectLink>}
+                    {live && <ProjectLink href={live}>{t("projects.live")}</ProjectLink>}
+                    {code && <ProjectLink href={code}>{t("projects.code")}</ProjectLink>}
                   </motion.div>
                 )}
               </li>
