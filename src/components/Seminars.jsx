@@ -28,7 +28,7 @@ export default function Seminars({ title: titleProp, items: itemsProp = [], href
   return (
     <section>
       {/* Heading row (title and link styled like Block.jsx headings) */}
-      <div className="mb-8 flex items-center justify-between md:mb-11">
+      <div className="mb-8 flex items-center justify-between gap-4 md:mb-11">
         <motion.h2
           {...reveal(0.1)}
           className="text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) md:text-[0.9375rem]"
@@ -39,53 +39,49 @@ export default function Seminars({ title: titleProp, items: itemsProp = [], href
           <motion.a
             {...reveal(0.14)}
             href={href}
-            className="-mr-[0.25em] text-xs font-normal tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
+            className="-mr-[0.25em] shrink-0 whitespace-nowrap text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
           >
             {t("seminars.details")} →
           </motion.a>
         )}
       </div>
 
-      {/* Top line */}
-      <motion.div
-        {...line(0.18)}
-        className="h-px origin-left bg-current/15"
-      />
-
-      {/* Rows */}
-      <ul>
+      {/* Cards: 1 column on mobile, 2 on desktop */}
+      <ul className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 md:gap-y-12">
         {items.map(({ year, title: name, topic }, i) => {
-          const rowDelay = 0.2 + i * 0.08; // rows cascade top to bottom
-          return (
-            // index key so rows don't remount (and re-animate) when the language changes
-            <li
-              key={i}
-              className="relative grid grid-cols-[4rem_1fr] items-baseline gap-x-4 gap-y-1 py-4 md:grid-cols-[10rem_1fr_auto] md:gap-x-6 md:py-[18px]"
-            >
-              <motion.span
-                {...reveal(rowDelay)}
-                className="text-[12px] font-light text-(color:--soft) md:text-[14px]"
-              >
-                {year}
-              </motion.span>
-              <motion.span
-                {...reveal(rowDelay + 0.04)}
-                className="text-[14px] font-normal md:text-base"
-              >
-                {name}
-              </motion.span>
-              <motion.span
-                {...reveal(rowDelay + 0.08)}
-                className="col-start-2 text-[12px] font-light text-(color:--soft) md:col-start-3 md:text-right md:text-[14px]"
-              >
-                {topic}
-              </motion.span>
+          const delay = 0.15 + (i % 2) * 0.1; // cards in the same row start together
 
-              {/* Row bottom line */}
-              <motion.span
-                {...line(rowDelay + 0.1)}
-                className="absolute inset-x-0 bottom-0 h-px origin-left bg-current/15"
+          return (
+            // index key so cards don't remount (and re-animate) when the language changes
+            <li key={i}>
+              {/* Top line */}
+              <motion.div
+                {...line(delay)}
+                className="h-px origin-left bg-current/15"
               />
+
+              <div className="pt-4 md:pt-5">
+                <motion.span
+                  {...reveal(delay + 0.05)}
+                  className="block text-[11px] font-light text-(color:--soft) md:text-[12px]"
+                >
+                  {year}
+                </motion.span>
+
+                <motion.h3
+                  {...reveal(delay + 0.1)}
+                  className="mt-2 text-[14px] font-medium leading-snug md:text-[16px]"
+                >
+                  {name}
+                </motion.h3>
+
+                <motion.p
+                  {...reveal(delay + 0.15)}
+                  className="mt-1.5 text-[12px] font-light leading-[1.6] text-(color:--soft) md:text-[13px]"
+                >
+                  {topic}
+                </motion.p>
+              </div>
             </li>
           );
         })}
