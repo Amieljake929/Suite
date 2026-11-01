@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useLanguage, useLocalized } from "../context/LanguageContext";
+import { Link } from "react-router-dom";
 
 /*
   Online Courses — 4 layouts, switch with the `variant` prop:
@@ -306,14 +307,15 @@ export default function OnlineCourses({
           {title}
         </motion.h2>
         {href && (
-          <motion.a
-            {...reveal(0.14)}
-            href={href}
-            className="-mr-[0.25em] shrink-0 whitespace-nowrap text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
-          >
-            {detailsLabel} →
-          </motion.a>
-        )}
+  <motion.div {...reveal(0.14)} className="-mr-[0.25em] shrink-0">
+    <Link
+      to={href}
+      className="whitespace-nowrap text-xs font-normal uppercase tracking-[0.25em] text-(color:--muted) transition-opacity hover:opacity-70 focus-visible:opacity-70 md:text-[0.9375rem]"
+    >
+      {detailsLabel} →
+    </Link>
+  </motion.div>
+)}
       </div>
 
       <Layout items={localizedItems} />

@@ -9,6 +9,7 @@ import Projects from "./pages/Projects";
 import Gear from "./pages/Gear";
 import Blogs from "./pages/Blogs";
 import BlogPost from "./pages/BlogPost";
+import OnlineCoursesPage from "./pages/OnlineCoursesPage";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/gear" element={<Gear />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:slug" element={<BlogPost />} />
+        <Route path="/courses" element={<OnlineCoursesPage />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer
