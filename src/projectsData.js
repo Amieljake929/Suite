@@ -20,6 +20,32 @@ export const projects = [
     code: "https://github.com/Amieljake929/ResuMate.git",
   },
   {
+    title: "Noir",
+    year: "2026",
+    description: tx(
+      "A modern, minimalist menswear e-commerce web application offering effortlessly elevated resortwear and complete curated outfits crafted for warm-weather sophistication",
+      "Una aplicación web de comercio electrónico de ropa masculina moderna y minimalista, que ofrece ropa de estilo resort con una elegancia impecable y atuendos completos y seleccionados, diseñados para una sofisticación en climas cálidos.",
+      "Isang makabago at minimalistang e-commerce web application para sa damit-panlalaki na nag-aalok ng mga damit-resort na natural ang kagandahan at mga kumpletong koleksyon ng kasuotan na idinisenyo para sa pormal at eleganteng panggabing pampainit ng panahon."
+    ),
+    tech: "React · Node.js · Supabase",
+    image: "/projects/noir/noir.png",
+    live: "https://example.com",
+    code: "https://github.com/",
+  },
+  {
+    title: "Creditly",
+    year: "2026",
+    description: tx(
+      "A modern, minimalist menswear e-commerce web application offering effortlessly elevated resortwear and complete curated outfits crafted for warm-weather sophistication",
+      "Una aplicación web de comercio electrónico de ropa masculina moderna y minimalista, que ofrece ropa de estilo resort con una elegancia impecable y atuendos completos y seleccionados, diseñados para una sofisticación en climas cálidos.",
+      "Isang makabago at minimalistang e-commerce web application para sa damit-panlalaki na nag-aalok ng mga damit-resort na natural ang kagandahan at mga kumpletong koleksyon ng kasuotan na idinisenyo para sa pormal at eleganteng panggabing pampainit ng panahon."
+    ),
+    tech: "React · Tailwind CSS · Supabase",
+    image: "/projects/creditly/creditly.png",
+    live: "https://example.com",
+    code: "https://github.com/",
+  },
+  {
     title: "Kodet",
     year: "2026",
     description: tx(
@@ -28,7 +54,7 @@ export const projects = [
       "Isang code snippet manager para sa pag-save, pag-organisa, at pagbabahagi ng mga snippet na ginagamit mo araw-araw."
     ),
     tech: "React · Express · MongoDB",
-    image: "/images/projects/kodet.png",
+    image: "/projects/kodet/kodet.png",
     live: "https://example.com",
     code: "https://github.com/",
   },
@@ -45,7 +71,7 @@ export const projects = [
       "Pinamamahalaan ang mga estudyante, grado, at iskedyul, na may hiwalay na access para sa admin, guro, at estudyante."
     ),
     tech: "React · Laravel · MySQL",
-    image: "/images/projects/sms.png",
+    image: "/projects/sms/sms.png",
     live: "https://example.com",
     code: "https://github.com/",
   },
@@ -62,7 +88,7 @@ export const projects = [
       "Humahawak ng mga talaan ng residente at mga kahilingan sa sertipiko para sa isang lokal na opisina ng barangay."
     ),
     tech: "PHP · MySQL · Bootstrap",
-    image: "/images/projects/bms.png",
+    image: "/projects/bms/bms.png",
     live: "https://example.com",
     code: "https://github.com/",
   },
